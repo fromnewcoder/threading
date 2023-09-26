@@ -3,12 +3,17 @@ package org.example;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadLocalBasicExample {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
-        ThreadLocal<String> myThreadLocal = new ThreadLocal<>();
+        ThreadLocal<String> myThreadLocal = ThreadLocal.withInitial(() -> "hello world");
 
         Thread thread1 = new Thread(() -> {
+            System.out.println(myThreadLocal.get());
+
             myThreadLocal.set("thread 1");
+            System.out.println(myThreadLocal.get());
+
+            myThreadLocal.remove();
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
